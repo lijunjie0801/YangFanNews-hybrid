@@ -39,7 +39,7 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
+    NSLog(@"00000");
     CYRootTabViewController *startView =  [[CYRootTabViewController alloc] init];
     self.window.rootViewController = startView;
     [self.window makeKeyAndVisible];
