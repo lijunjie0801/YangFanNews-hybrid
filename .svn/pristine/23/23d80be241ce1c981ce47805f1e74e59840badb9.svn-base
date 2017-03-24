@@ -1,0 +1,193 @@
+//
+//  CY_NetAPIManager.m
+//  IOSFramework
+//
+//  Created by xu on 16/3/1.
+//
+//
+
+#import "CY_NetAPIManager.h"
+#import "CYNetAPIClient.h"
+
+#define publicKey @"123456"
+@implementation CY_NetAPIManager
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _canLoadMore = YES;
+        _isLoading = NO;
+        _willLoadMore = NO;
+        _page = @"1";
+    }
+    return self;
+}
+- (void)configWithTasks:(CY_NetAPIManager *)resultA
+{
+    self.page = resultA.page;
+    //    self.totalPage = resultA.totalPage;
+    //    self.totalRow = resultA.totalRow;
+    
+    if (_willLoadMore) {
+        [self.list addObjectsFromArray:resultA.list];
+        _page = [NSString stringWithFormat:@"%@",[NSNumber numberWithInteger:_page.intValue +1]];
+        
+    }else{
+        self.list = [NSMutableArray arrayWithArray:resultA.list];
+        _page = @"1";
+    }
+    self.canLoadMore = self.page.intValue;
+}
+
++ (instancetype)sharedManager {
+    static CY_NetAPIManager *shared_manager = nil;
+    static dispatch_once_t pred;
+    dispatch_once(&pred, ^{
+        shared_manager = [[self alloc] init];
+    });
+    return shared_manager;
+}
+/*获取注册验证码*/
+-(void)request_getVerificationCode:(NSDictionary *)params andBlock:(void (^)(id data, NSError *error))block
+{
+    NSString *JsonString = [ NSString stringWithFormat:@"%@",[params JSONString] ];
+    JsonString = [JsonString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    JsonString = [JsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    NSString *sign = [Encrypt getMd5_32Bit_String:[NSString stringWithFormat:@"123456%@",JsonString]];
+    NSString *path = [NSString stringWithFormat:@"%@&sign=%@",kBaseUrlStr_Test,sign];
+    [[CYNetAPIClient sharedJsonClient] requestJsonDataWithPath:path withParams:params withMethodType:Post autoShowError:YES andBlock:^(id data, NSError *error) {
+        NSLog(@"-->%@",data);
+        NSDictionary *dic = data;
+        NSString *string = dic[@"errorMessage"];
+        NSLog(@"%@",string);
+        
+        if (data) {
+            block(data, nil);
+        }else{
+            block(nil, error);
+        }
+    }];
+}
+/*注册*/
+-(void)request_getRegisterResult:(NSDictionary *)params andBlock:(void (^)(id, NSError *))block{
+    NSString *JsonString = [ NSString stringWithFormat:@"%@",[params JSONString] ];
+    JsonString = [JsonString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    JsonString = [JsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    NSString *sign = [Encrypt getMd5_32Bit_String:[NSString stringWithFormat:@"123456%@",JsonString]];
+    NSString *path = [NSString stringWithFormat:@"%@&sign=%@",kBaseUrlStr_Test,sign];
+    [[CYNetAPIClient sharedJsonClient] requestJsonDataWithPath:path withParams:params withMethodType:Post autoShowError:YES andBlock:^(id data, NSError *error) {
+        NSDictionary *dic = data[@"responseObject"];
+        NSString *string = dic[@"resultMessage"];
+        NSLog(@"注册返回信息--%@",string);
+        if (data) {
+            block(data, nil);
+        }else{
+            block(nil, error);
+        }
+    }];
+
+}
+/*登录*/
+-(void)request_getLoginResult:(NSDictionary *)params andBlock:(void (^)(id, NSError *))block{
+    NSString *JsonString = [ NSString stringWithFormat:@"%@",[params JSONString] ];
+    JsonString = [JsonString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    JsonString = [JsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    NSString *sign = [Encrypt getMd5_32Bit_String:[NSString stringWithFormat:@"123456%@",JsonString]];
+    NSString *path = [NSString stringWithFormat:@"%@&sign=%@",kBaseUrlStr_Test,sign];
+    [[CYNetAPIClient sharedJsonClient] requestJsonDataWithPath:path withParams:params withMethodType:Post autoShowError:YES andBlock:^(id data, NSError *error) {
+        NSLog(@"登录结果-->%@",data);
+        
+        [[NSUserDefaults standardUserDefaults]setObject:data forKey:@"loginInformation"];
+         NSString * URL = [NSString stringWithFormat:@"file://%@/index.html#/",Bundle];
+        [[NSUserDefaults standardUserDefaults]setObject:URL forKey:@"assetServer"];
+        
+        NSDictionary *dic = data[@"responseObject"];
+        NSLog(@"responseObject为：%@",dic);
+        NSString *string = data[@"resultMessage"];
+        NSLog(@"登录返回信息%@",string);
+        
+        if (data) {
+            block(data, nil);
+        }else{
+            block(nil, error);
+        }
+    }];
+}
+/*修改密码*/
+-(void)request_getchangePassWord:(NSDictionary *)params andBlock:(void (^)(id, NSError *))block{
+    NSString *JsonString = [ NSString stringWithFormat:@"%@",[params JSONString] ];
+    JsonString = [JsonString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    JsonString = [JsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    NSString *sign = [Encrypt getMd5_32Bit_String:[NSString stringWithFormat:@"123456%@",JsonString]];
+    NSString *path = [NSString stringWithFormat:@"%@&sign=%@",kBaseUrlStr_Test,sign];
+    [[CYNetAPIClient sharedJsonClient] requestJsonDataWithPath:path withParams:params withMethodType:Post autoShowError:YES andBlock:^(id data, NSError *error) {
+        NSLog(@"修改结果-->%@",data);
+        NSString *string = data[@"resultMessage"];
+        NSLog(@"返回信息%@",string);
+        
+        if (data) {
+            block(data, nil);
+        }else{
+            block(nil, error);
+        }
+    }];
+}
+/*获取首页数据*/
+-(void)request_getHomeData:(NSDictionary *)params andBlock:(void (^)(id, NSError *))block{
+    NSString *JsonString = [ NSString stringWithFormat:@"%@",[params JSONString] ];
+    JsonString = [JsonString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    JsonString = [JsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    NSString *sign = [Encrypt getMd5_32Bit_String:[NSString stringWithFormat:@"123456%@",JsonString]];
+    NSString *path = [NSString stringWithFormat:@"%@&sign=%@",kBaseUrlStr_Test,sign];
+    [[CYNetAPIClient sharedJsonClient] requestJsonDataWithPath:path withParams:params withMethodType:Post autoShowError:YES andBlock:^(id data, NSError *error) {
+        NSLog(@"首页数据-->%@",data);
+        NSString *string = data[@"resultMessage"];
+        NSLog(@"返回信息%@",string);
+        
+        if (data) {
+            block(data, nil);
+        }else{
+            block(nil, error);
+        }
+    }];
+}
+-(void)request_perfectInfo:(NSDictionary *)params andBlock:(void (^)(id data, NSError *error))block
+{
+    NSString *JsonString = [ NSString stringWithFormat:@"%@",[params JSONString] ];
+    JsonString = [JsonString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    JsonString = [JsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    NSString *sign = [Encrypt getMd5_32Bit_String:[NSString stringWithFormat:@"123456%@",JsonString]];
+    NSString *path = [NSString stringWithFormat:@"%@&sign=%@",kBaseUrlStr_Test,sign];
+    [[CYNetAPIClient sharedJsonClient] requestJsonDataWithPath:path withParams:params withMethodType:Post autoShowError:YES andBlock:^(id data, NSError *error) {
+        NSLog(@"修改结果-->%@",data);
+        NSString *string = data[@"resultMessage"];
+        NSLog(@"返回信息%@",string);
+        
+        if (data) {
+            block(data, nil);
+        }else{
+            block(nil, error);
+        }
+    }];
+}
+//总的接口
+-(void)request_getDic:(NSDictionary *)params andBlock:(void (^)(id data, NSError *error))block
+{
+    NSString *JsonString = [ NSString stringWithFormat:@"%@",[params JSONString] ];
+    JsonString = [JsonString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    JsonString = [JsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    NSString *sign = [Encrypt getMd5_32Bit_String:[NSString stringWithFormat:@"123456%@",JsonString]];
+    NSString *path = [NSString stringWithFormat:@"%@&sign=%@",kBaseUrlStr_Test,sign];
+    [[CYNetAPIClient sharedJsonClient] requestJsonDataWithPath:path withParams:params withMethodType:Post autoShowError:YES andBlock:^(id data, NSError *error) {
+        NSLog(@"返回的数据为-->%@",data);
+        if (data) {
+            block(data, nil);
+        }else{
+            block(nil, error);
+        }
+    }];
+
+}
+
+@end

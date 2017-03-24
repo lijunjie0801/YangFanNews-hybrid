@@ -1,0 +1,57 @@
+//
+//  CYNetAPIClient.h
+//  IOSFramework
+//
+//  Created by xu on 16/2/27.
+//
+//
+
+#import "AFNetworking.h"
+typedef enum {
+    Get = 0,
+    Post,
+    Put,
+    Delete
+} NetworkMethod;
+
+@interface CYNetAPIClient : AFHTTPRequestOperationManager
+
++ (id)sharedJsonClient;
++ (id)changeJsonClient;
+
+- (void)requestJsonDataWithPath:(NSString *)aPath
+                     withParams:(NSDictionary*)params
+                 withMethodType:(NetworkMethod)method
+                       andBlock:(void (^)(id data, NSError *error))block;
+
+- (void)requestJsonDataWithPath:(NSString *)aPath
+                     withParams:(NSDictionary*)params
+                 withMethodType:(NetworkMethod)method
+                  autoShowError:(BOOL)autoShowError
+                       andBlock:(void (^)(id data, NSError *error))block;
+
+- (void)requestJsonDataWithPath:(NSString *)aPath
+                           file:(NSDictionary *)file
+                     withParams:(NSDictionary*)params
+                 withMethodType:(NetworkMethod)method
+                       andBlock:(void (^)(id data, NSError *error))block;
+
+- (void)requestJsonDataWithPath:(NSString *)aPath
+                     withParams:(NSDictionary*)params
+              withGetMethodType:(NetworkMethod)method
+                  autoShowError:(BOOL)autoShowError
+                       andBlock:(void (^)(id data, NSError *error))block;
+
+- (void)uploadImage:(UIImage *)image path:(NSString *)path name:(NSString *)name
+         withParams:(NSDictionary*)params
+       successBlock:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+       failureBlock:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+      progerssBlock:(void (^)(CGFloat progressValue))progress;
+
+-(void)requestImgList:(NSString *)aPath
+           withParams:(NSDictionary*)params
+       withMethodType:(NetworkMethod)method
+        autoShowError:(BOOL)autoShowError
+             andBlock:(void (^)(id data, NSError *error))block;
+
+@end

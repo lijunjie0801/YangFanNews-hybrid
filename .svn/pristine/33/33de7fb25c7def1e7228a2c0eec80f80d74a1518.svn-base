@@ -1,0 +1,32 @@
+//
+//  CY_NetAPIManager.h
+//  IOSFramework
+//
+//  Created by xu on 16/3/1.
+//
+//
+
+#import <Foundation/Foundation.h>
+
+@interface CY_NetAPIManager : NSObject
+
+@property (nonatomic,strong) NSDictionary *dataDic;
+
+@property (assign, nonatomic) BOOL canLoadMore, willLoadMore, isLoading;
+
+@property (readwrite, nonatomic, strong) NSMutableArray *list;
+
+@property (readwrite, nonatomic, strong) NSString *page, *pageSize, *totalPage, *totalRow;
+
++ (instancetype)sharedManager;
+- (void)request_getMessage:(NSDictionary *)params andBlock:(void (^)(id data, NSError *error))block;
+-(void)request_getVerificationCode:(NSDictionary *)params andBlock:(void (^)(id data, NSError *error))block;
+-(void)request_getRegisterResult:(NSDictionary *)params andBlock:(void (^)(id data, NSError *error))block;
+-(void)request_getLoginResult:(NSDictionary *)params andBlock:(void (^)(id, NSError *))block;
+-(void)request_getchangePassWord:(NSDictionary *)params andBlock:(void (^)(id data, NSError *error))block;
+-(void)request_perfectInfo:(NSDictionary *)params andBlock:(void (^)(id data, NSError *error))block;
+/*获取首页数据*/
+-(void)request_getHomeData:(NSDictionary *)params andBlock:(void (^)(id data, NSError *error))block;
+//getDic:(需要传的字典)----/*统一接口*/
+-(void)request_getDic:(NSDictionary *)params andBlock:(void (^)(id data, NSError *error))block;
+@end

@@ -1,0 +1,25 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "9c0e7619-ad5a-5d45-8e99-555bcdb87a59++5004",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "9c0e7619-ad5a-5d45-8e99-555bcdb87a59++5004" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "9c0e7619-ad5a-5d45-8e99-555bcdb87a59++5004" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "0D271275-AA0F-4AB9-8016-996960FD0629",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "9c0e7619-ad5a-5d45-8e99-555bcdb87a59++5004" : "E%E8%A1%8C%E9%94%80\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "IOSFramework",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "IOSFramework.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/114.215.97.230:18080\/svn\/Insurance",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9c0e7619-ad5a-5d45-8e99-555bcdb87a59++5004"
+    }
+  ]
+}

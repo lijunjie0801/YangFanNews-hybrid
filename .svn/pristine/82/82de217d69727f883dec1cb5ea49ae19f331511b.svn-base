@@ -1,0 +1,33 @@
+//
+//  CYDotNetAPIClient.m
+//  IOSFramework
+//
+//  Created by xu on 16/3/1.
+//
+//
+
+#import "CYDotNetAPIClient.h"
+
+@implementation CYDotNetAPIClient
+
++ (instancetype)sharedClient {
+    
+    static CYDotNetAPIClient *_sharedClient = nil;
+    
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        
+        _sharedClient = [[CYDotNetAPIClient alloc] initWithBaseURL:[NSURL URLWithString:[NSObject baseURLStr]]];
+        
+        _sharedClient.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
+        
+        [_sharedClient.reachabilityManager startMonitoring];
+        
+    });
+    
+    return _sharedClient;
+    
+}
+
+@end

@@ -1,0 +1,84 @@
+//
+//  CYRootTabViewController.m
+//  IOSFramework
+//
+//  Created by xu on 16/3/14.
+//
+//
+
+#import "CYRootTabViewController.h"
+#import "RDVTabBarItem.h"
+#import "HomeViewController.h"
+#import "FoundViewController.h"
+#import "ShareViewController.h"
+#import "Me_RootViewController.h"
+#import "DTCustomWebViewController.h"
+
+
+@interface CYRootTabViewController ()
+
+@end
+
+@implementation CYRootTabViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self setupViewControllers];
+    
+    [self customizeTabBarForController];
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    
+}
+
+- (void)setupViewControllers {
+    
+    HomeViewController *homePage = [[HomeViewController alloc] init];
+    UINavigationController *nav_home = [[UINavigationController alloc] initWithRootViewController:homePage];
+    
+    FoundViewController *progress = [[FoundViewController alloc] init];
+    UINavigationController *nav_progress = [[UINavigationController alloc] initWithRootViewController:progress];
+    
+    
+    ShareViewController *search = [[ShareViewController alloc] init];
+    UINavigationController *nav_search = [[UINavigationController alloc] initWithRootViewController:search];
+    
+    Me_RootViewController *me = [[Me_RootViewController alloc] init];
+    UINavigationController *nav_me = [[UINavigationController alloc] initWithRootViewController:me];
+    
+//    NSString * URL = [NSString stringWithFormat:@"file://%@/index.html#/person/detail",Bundle];
+////    NSURL *url = [NSURL URLWithString:URL];
+////    NSURLRequest* request = [NSURLRequest requestWithURL:url] ;
+//    DTCustomWebViewController * VC = [[DTCustomWebViewController alloc]initWithStartPage:URL];
+////    [self.navigationController pushViewController:VC animated:YES];
+//    UINavigationController *nav_me = [[UINavigationController alloc] initWithRootViewController:VC];
+    
+    [self setViewControllers:@[nav_home, nav_progress, nav_search, nav_me]];
+    
+}
+
+- (void)customizeTabBarForController {
+    UIImage *selectbackgroundImage = [UIImage imageNamed:@"selected_tabbarBackImage"];
+    UIImage *unselectbackgroundImage = [UIImage imageNamed:@"unselected_tabbarBackImage"];
+    NSArray *tabBarItemImages = @[@"homePage", @"search", @"progress", @"me"];
+    NSArray *tabBarItemTitles = @[@"首页", @"发现", @"分享", @"我的"];
+    
+    NSInteger index = 0;
+    for (RDVTabBarItem *item in [[self tabBar] items]) {
+        [item setBackgroundSelectedImage:selectbackgroundImage withUnselectedImage:unselectbackgroundImage];
+        UIImage *selectedimage = [UIImage imageNamed:[NSString stringWithFormat:@"%@_selected",
+                                                      [tabBarItemImages objectAtIndex:index]]];
+        UIImage *unselectedimage = [UIImage imageNamed:[NSString stringWithFormat:@"%@_normal",
+                                                        [tabBarItemImages objectAtIndex:index]]];
+        [item setFinishedSelectedImage:selectedimage withFinishedUnselectedImage:unselectedimage];
+        [item setTitle:[tabBarItemTitles objectAtIndex:index]];
+        index++;
+    }
+}
+
+
+@end

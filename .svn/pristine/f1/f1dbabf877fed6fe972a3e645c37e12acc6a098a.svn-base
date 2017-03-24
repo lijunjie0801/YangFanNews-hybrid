@@ -1,0 +1,14 @@
+//
+//  AppDelegate.h
+//  IOSFramework
+//
+//  Created by xu on 16/2/26.
+//
+//
+
+#import <UIKit/UIKit.h>
+#import "AFNetworkReachabilityManager.h"
+@interface AppDelegate : UIResponder<UIApplicationDelegate>
+@property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, assign) AFNetworkReachabilityStatus netWorkStatus;
+@end

@@ -1,0 +1,125 @@
+//
+//  ShareViewController.m
+//  IOSFramework
+//
+//  Created by xu on 16/3/14.
+//
+//
+
+#import "ShareViewController.h"
+#import "RDVTabBarController.h"
+#import "CY_NetAPIManager.h"
+
+@interface ShareViewController ()
+
+@end
+
+@implementation ShareViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title = @"分享给好友";
+    [self setShareUI];
+    // Do any additional setup after loading the view.
+}
+-(void)setShareUI
+{
+     UIImageView *imageView = [[UIImageView alloc] init];
+    [imageView autoSetDimensionsToSize:CGSizeMake(120, 120)];
+    imageView.image = [UIImage imageNamed:@"code.png"];
+    [self.view addSubview:imageView];
+    [imageView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:(kScreen_Width-120)/2];
+    [imageView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:(kScreen_Width-120)/2];
+    [imageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:20];
+    
+    UILabel *phoneLabel = [[UILabel alloc]init];
+    phoneLabel.text = @"您的二维码";
+    phoneLabel.textColor = [UIColor blackColor];
+    phoneLabel.font = [UIFont systemFontOfSize:16];
+    [self.view addSubview:phoneLabel];
+    [phoneLabel autoSetDimensionsToSize:CGSizeMake(80, 20)];
+    [phoneLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:(kScreen_Width-80)/2];
+    [phoneLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:(kScreen_Width-80)/2];
+    [phoneLabel autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:imageView withOffset:30];
+    
+    UILabel *phoneLabel1 = [[UILabel alloc]init];
+    phoneLabel1.text = @"您可以邀请小伙伴扫码进行注册";
+    phoneLabel1.textColor = [UIColor blackColor];
+    phoneLabel1.font = [UIFont systemFontOfSize:12];
+    [self.view addSubview:phoneLabel1];
+    [phoneLabel1 autoSetDimensionsToSize:CGSizeMake(170, 20)];
+    [phoneLabel1 autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:(kScreen_Width-170)/2];
+    [phoneLabel1 autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:(kScreen_Width-170)/2];
+    [phoneLabel1 autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:phoneLabel withOffset:20];
+    
+    UIImageView *spearTwo = [[UIImageView alloc]init];
+    [spearTwo setBackgroundColor:[UIColor colorWithHexString:@"f4f4f4f4"]];
+    [self.view addSubview:spearTwo];
+    [spearTwo autoSetDimensionsToSize:CGSizeMake(1, 1)];
+    [spearTwo autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:30];
+    [spearTwo autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:30];
+    [spearTwo autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:phoneLabel1 withOffset:10];
+    
+    UIView *backView = [[UIView alloc]init];
+    [self.view addSubview:backView];
+    [backView autoSetDimensionsToSize:CGSizeMake(200, 200)];
+    [backView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
+    [backView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+    [backView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:spearTwo withOffset:10];
+    
+    
+    NSArray* imageNames = [NSArray arrayWithObjects:@"c-friends.png",@"link.png",@"mail.png",@"message.png",@"qq.png",@"sina.png",@"space.png",@"wechat.png",@"weibo.png", nil];
+    for (int i=0; i<9; i++) {
+        UIButton *Btn = [[UIButton alloc] init];
+        [Btn setBackgroundImage:[UIImage imageNamed:[imageNames objectAtIndex: i]] forState:UIControlStateNormal];
+        Btn.tag = i;
+        CGRect frame;
+        frame.size.width = 50;//设置按钮坐标及大小
+        frame.size.height = 50;
+        frame.origin.x = (i%3)*(50+45)+40;
+        frame.origin.y = floor(i/3)*(50+20)+20;
+        [Btn setFrame:frame];
+        [Btn setBackgroundColor:[UIColor clearColor]];
+        [Btn addTarget:self action:@selector(btnPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [backView addSubview:Btn];
+    }
+}
+-(void)btnPressed:(id)sender
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"test://achao"]];
+    NSDictionary *dic = @{
+                          @"requestObject":@{
+                                  @"customerId":@"1",
+                                  @"cityCode":@"3310000",
+                                  @"licenseNo":@"辽A3265K",
+                                  @"carOwner":@"测车主"
+                                  },
+                          @"channelType":@"1",
+                          @"requestService":@"carInsureEntry"
+                          };
+    [[CY_NetAPIManager sharedManager]request_getDic:dic andBlock:^(id data, NSError *error) {
+        NSString *resultMessage = data[@"resultMessage"];
+        showAlert(resultMessage);
+    }];
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self.rdv_tabBarController setTabBarHidden:NO animated:NO];
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

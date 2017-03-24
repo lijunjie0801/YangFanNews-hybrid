@@ -1,0 +1,184 @@
+//
+//  HomeViewCell.m
+//  IOSFramework
+//
+//  Created by 王刚 on 16/3/25.
+//
+//
+
+#import "HomeViewCell.h"
+
+@implementation HomeViewCell
+
+
+
+-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        for (int i = 0; i <2; i++) {
+            CGFloat spear = 3;
+            UIView *leftView = [[UIView alloc]init];
+            [self.contentView addSubview:leftView];
+            [leftView autoSetDimensionsToSize:CGSizeMake((kScreen_Width - spear*3)/2, 200)];
+            [leftView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:spear +((kScreen_Width - spear*3)/2 + spear)*i];
+            UIImageView *imageView = [[UIImageView alloc]init];
+            imageView.image = [UIImage imageNamed:@"list1"];
+            [leftView addSubview:imageView];
+            [imageView autoSetDimensionsToSize:CGSizeMake(0, 100)];
+            [imageView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
+            [imageView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+            [imageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
+            
+            UILabel *typeLabel = [[UILabel alloc]init];
+            typeLabel.text = @"商务飞人(精英版)";
+            typeLabel.textColor = [UIColor blackColor];
+            typeLabel.font = [UIFont systemFontOfSize:16];
+            typeLabel.adjustsFontSizeToFitWidth = YES;
+            CGSize typeLabelSize = [typeLabel.text sizeWithFont:[UIFont systemFontOfSize:16]];
+            [leftView addSubview:typeLabel];
+            [typeLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10];
+            [typeLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:imageView withOffset:3];
+            
+            UILabel *ageLabel = [[UILabel alloc]init];
+            ageLabel.text = @"投保年龄:0-75岁";
+            ageLabel.font = [UIFont systemFontOfSize:14];
+            ageLabel.adjustsFontSizeToFitWidth = YES;
+            [leftView addSubview:ageLabel];
+            [ageLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10];
+            [ageLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:typeLabel withOffset:5];
+            
+            UILabel *priceLabel = [[UILabel alloc]init];
+            priceLabel.text = @"保单价格:99元/年";
+            priceLabel.font = [UIFont systemFontOfSize:14];
+            priceLabel.adjustsFontSizeToFitWidth = YES;
+            [leftView addSubview:priceLabel];
+            [priceLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10];
+            [priceLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:ageLabel withOffset:3];
+            
+            
+            UIButton *byeBtn = [[UIButton alloc]init];
+            [byeBtn setTitle:@"立即购买" forState:UIControlStateNormal];
+            byeBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+            [byeBtn setBackgroundColor:[UIColor colorWithHexString:@"ed6d2a"]];
+            [leftView addSubview:byeBtn];
+            [byeBtn autoSetDimensionsToSize:CGSizeMake(0, 20)];
+            [byeBtn autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:3];
+            [byeBtn autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:3];
+            [byeBtn autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:5];
+        }
+        [self setBackgroundColor:[UIColor colorWithHexString:@"f7f1ee"]];
+    }
+    return self;
+}
+-(void)setMdOne:(HomeViewMd *)MdOne{
+//    CGFloat spear = 3;
+//    UIView *leftView = [[UIView alloc]init];
+//    [self.contentView addSubview:leftView];
+//    [leftView autoSetDimensionsToSize:CGSizeMake((kScreen_Width - spear*3)/2, 200)];
+//    [leftView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:spear];
+//    UIImageView *imageView = [[UIImageView alloc]init];
+//    imageView.image = [UIImage imageNamed:@"list1"];
+//    [leftView addSubview:imageView];
+//    [imageView autoSetDimensionsToSize:CGSizeMake(0, 100)];
+//    [imageView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
+//    [imageView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+//    [imageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
+//    
+//    UILabel *typeLabel = [[UILabel alloc]init];
+//    typeLabel.text = @"商务飞人(精英版)";
+//    typeLabel.textColor = [UIColor blackColor];
+//    typeLabel.font = [UIFont systemFontOfSize:16];
+//    typeLabel.adjustsFontSizeToFitWidth = YES;
+//    CGSize typeLabelSize = [typeLabel.text sizeWithFont:[UIFont systemFontOfSize:16]];
+//    [leftView addSubview:typeLabel];
+//    [typeLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10];
+//    [typeLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:imageView withOffset:3];
+//    
+//    UILabel *ageLabel = [[UILabel alloc]init];
+//    ageLabel.text = @"投保年龄:0-75岁";
+//    ageLabel.font = [UIFont systemFontOfSize:14];
+//    ageLabel.adjustsFontSizeToFitWidth = YES;
+//    [leftView addSubview:ageLabel];
+//    [ageLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10];
+//    [ageLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:typeLabel withOffset:5];
+//    
+//    UILabel *priceLabel = [[UILabel alloc]init];
+//    priceLabel.text = @"保单价格:99元/年";
+//    priceLabel.font = [UIFont systemFontOfSize:14];
+//    priceLabel.adjustsFontSizeToFitWidth = YES;
+//    [leftView addSubview:priceLabel];
+//    [priceLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10];
+//    [priceLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:ageLabel withOffset:3];
+//    
+//    
+//    UIButton *byeBtn = [[UIButton alloc]init];
+//    [byeBtn setTitle:@"立即购买" forState:UIControlStateNormal];
+//    byeBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+//    [byeBtn setBackgroundColor:[UIColor colorWithHexString:@"ed6d2a"]];
+//    [leftView addSubview:byeBtn];
+//    [byeBtn autoSetDimensionsToSize:CGSizeMake(0, 20)];
+//    [byeBtn autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:3];
+//    [byeBtn autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:3];
+//    [byeBtn autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:5];
+}
+-(void)setMdTwo:(HomeViewMd *)MdTwo{
+//    CGFloat spear = 3;
+//    UIView *rightView = [[UIView alloc]init];
+//    [self.contentView addSubview:rightView];
+//    [rightView autoSetDimensionsToSize:CGSizeMake((kScreen_Width - spear*3)/2, 200)];
+//    [rightView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:spear];
+//    UIImageView *imageView = [[UIImageView alloc]init];
+//    imageView.image = [UIImage imageNamed:@"list2"];
+//    [rightView addSubview:imageView];
+//    [imageView autoSetDimensionsToSize:CGSizeMake(0, 100)];
+//    [imageView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
+//    [imageView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+//    [imageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
+//    
+//    UILabel *typeLabel = [[UILabel alloc]init];
+//    typeLabel.text = @"商务飞人(精英版)";
+//    typeLabel.textColor = [UIColor blackColor];
+//    typeLabel.font = [UIFont systemFontOfSize:16];
+//    typeLabel.adjustsFontSizeToFitWidth = YES;
+//    CGSize typeLabelSize = [typeLabel.text sizeWithFont:[UIFont systemFontOfSize:16]];
+//    [rightView addSubview:typeLabel];
+//    [typeLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10];
+//    [typeLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:imageView withOffset:3];
+//    
+//    UILabel *ageLabel = [[UILabel alloc]init];
+//    ageLabel.text = @"投保年龄:0-75岁";
+//    ageLabel.font = [UIFont systemFontOfSize:14];
+//    ageLabel.adjustsFontSizeToFitWidth = YES;
+//    [rightView addSubview:ageLabel];
+//    [ageLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10];
+//    [ageLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:typeLabel withOffset:5];
+//    
+//    UILabel *priceLabel = [[UILabel alloc]init];
+//    priceLabel.text = @"保单价格:99元/年";
+//    priceLabel.font = [UIFont systemFontOfSize:14];
+//    priceLabel.adjustsFontSizeToFitWidth = YES;
+//    [rightView addSubview:priceLabel];
+//    [priceLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10];
+//    [priceLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:ageLabel withOffset:3];
+//    
+//    
+//    UIButton *byeBtn = [[UIButton alloc]init];
+//    [byeBtn setTitle:@"立即购买" forState:UIControlStateNormal];
+//    byeBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+//    [byeBtn setBackgroundColor:[UIColor colorWithHexString:@"ed6d2a"]];
+//    [rightView addSubview:byeBtn];
+//    [byeBtn autoSetDimensionsToSize:CGSizeMake(0, 20)];
+//    [byeBtn autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:3];
+//    [byeBtn autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:3];
+//    [byeBtn autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:5];
+}
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+}
+
+@end

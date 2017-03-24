@@ -1,0 +1,79 @@
+/*
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements.  See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership.  The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License.  You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied.  See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ */
+//
+// Prefix header for all source files of the 'IOSFramework' target in the 'IOSFramework' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+    #import "JSONKit.h"
+     #import "CY_NetAPIManager.h"
+    #import "UIColor+expanded.h"
+    #import "UIImage+Common.h"
+    #import "NSObject+Common.h"
+    #import "UIImageView+WebCache.h"
+    #import "UIView+Common.h"
+   #import "MBProgressHUD.h"
+   #import "NSString+Common.h"
+  #import "UIView+AutoLayout.h"
+#import "UICustomDefine.h"
+#import "Encrypt.h"
+#import "ThreeDES.h"
+#import "Check.h"
+#import "ToolKit.h"
+
+#endif
+#define DebugLog(s, ...) NSLog(@"%s(%d): %@", __FUNCTION__, __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__])
+
+#define kColorTableBG [UIColor colorWithHexString:@"0xfafafa"]
+
+#define kBadgeTipStr @"kBadgeTipStr"
+#define kNavTitleFontSize 17
+
+#define kDevice_Is_iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+#define kDevice_Is_iPhone6 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) : NO)
+#define kDevice_Is_iPhone6Plus ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2208), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define kScreen_Bounds [UIScreen mainScreen].bounds
+#define kScreen_Height [UIScreen mainScreen].bounds.size.height
+#define kScreen_Width [UIScreen mainScreen].bounds.size.width
+
+#define kPaddingLeftWidth 15
+#define kNav_Tab_LightHeight 113
+#define kNav_TabHeight 93
+#define kNav_LightHeight 64
+
+#define kKeyWindow [UIApplication sharedApplication].keyWindow
+//#define kBaseUrlStr_Test @"http://10.100.133.112:9004/mobile/mobileshop.action?action=trading"
+#define kBaseUrlStr_Test @"http://180.168.131.15/echannel/mobile/mobileshop.action?action=trading"
+
+#define ESWeak(var, weakVar) __weak __typeof(&*var) weakVar = var
+#define ESStrong_DoNotCheckNil(weakVar, _var) __typeof(&*weakVar) _var = weakVar
+#define ESStrong(weakVar, _var) ESStrong_DoNotCheckNil(weakVar, _var); if (!_var) return;
+
+#define ESWeak_(var) ESWeak(var, weak_##var);
+#define ESStrong_(var) ESStrong(weak_##var, _##var);
+
+/** defines a weak `self` named `__weakSelf` */
+#define ESWeakSelf      ESWeak(self, __weakSelf);
+/** defines a strong `self` named `_self` from `__weakSelf` */
+#define ESStrongSelf    ESStrong(__weakSelf, _self);
+//本地app包
+#define Bundle [[NSBundle mainBundle]pathForResource:@"app" ofType:nil]
